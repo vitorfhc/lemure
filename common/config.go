@@ -37,7 +37,7 @@ func init() {
 
 // LoadConfigurations loads all configurations from config.json
 // and makes a Configuration struct from it
-func LoadConfigurations() Configuration {
+func LoadConfigurations() *Configuration {
 	log.Println("Loading configurations")
 
 	// Reads the file
@@ -56,5 +56,5 @@ func LoadConfigurations() Configuration {
 		log.Fatal(err)
 	}
 
-	return config
+	return &config
 }
