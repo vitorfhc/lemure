@@ -53,5 +53,5 @@ func LoadConfigurations() *Configuration {
 		log.Fatal(err)
 	}
 
-	return &config
+	return config
 }
