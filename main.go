@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image/color"
 	"log"
 
@@ -16,18 +17,23 @@ var config common.Configuration
 // update is called every time in ebiten's
 // game loop
 func update(screen *ebiten.Image) error {
+	// Updates it
+	coreEngine.Update()
+
 	if ebiten.IsDrawingSkipped() {
 		return nil
 	}
+
+	// All draws after here
 
 	// Clears the screen
 	black := color.RGBA{0, 0, 0, 0xff}
 	screen.Fill(black)
 
-	// Updates it
-	coreEngine.Update()
-
-	ebitenutil.DebugPrint(screen, "Hello, World!")
+	// Debug
+	tps := ebiten.CurrentTPS()
+	tpsString := fmt.Sprintf("TPS: %f", tps)
+	ebitenutil.DebugPrint(screen, tpsString)
 
 	return nil
 }
