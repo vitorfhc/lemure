@@ -1,6 +1,7 @@
 package main
 
 import (
+	"image/color"
 	"log"
 
 	"github.com/hajimehoshi/ebiten"
@@ -19,6 +20,11 @@ func update(screen *ebiten.Image) error {
 		return nil
 	}
 
+	// Clears the screen
+	black := color.RGBA{0, 0, 0, 0xff}
+	screen.Fill(black)
+
+	// Updates it
 	engine.Update()
 
 	ebitenutil.DebugPrint(screen, "Hello, World!")
