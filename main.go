@@ -6,12 +6,12 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
-	"github.com/vitorfhc/GoMario/gmcommon"
-	"github.com/vitorfhc/GoMario/gmengine"
+	"github.com/vitorfhc/lemure/common"
+	"github.com/vitorfhc/lemure/engine"
 )
 
-var engine gmengine.Engine
-var config gmcommon.Configuration
+var coreEngine engine.Engine
+var config common.Configuration
 
 // update is called every time in ebiten's
 // game loop
@@ -25,7 +25,7 @@ func update(screen *ebiten.Image) error {
 	screen.Fill(black)
 
 	// Updates it
-	engine.Update()
+	coreEngine.Update()
 
 	ebitenutil.DebugPrint(screen, "Hello, World!")
 
@@ -47,16 +47,16 @@ func main() {
 	log.SetFlags(log.Ltime)
 
 	// Gets all configurations and handles them
-	config = gmcommon.LoadConfigurations()
+	config = common.LoadConfigurations()
 	handleFullscreen()
 
 	// Define start scene and creates Engine
-	startGameObjects := []gmengine.GameObject{gmengine.GameObject{"GO 01"}}
-	startScene := &gmengine.Scene{Name: "Scene 01", GameObjects: startGameObjects}
-	engine = gmengine.Engine{startScene}
+	startGameObjects := []engine.GameObject{engine.GameObject{"GO 01"}}
+	startScene := &engine.Scene{Name: "Scene 01", GameObjects: startGameObjects}
+	coreEngine = engine.Engine{startScene}
 
 	// Ebiten starts
-	err := ebiten.Run(update, config.Width, config.Height, config.Scale, "GoMario")
+	err := ebiten.Run(update, config.Width, config.Height, config.Scale, "lemure")
 	if err != nil {
 		log.Fatal(err)
 	}

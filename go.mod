@@ -1,4 +1,4 @@
-module github.com/vitorfhc/GoMario
+module github.com/vitorfhc/lemure
 
 go 1.13
 

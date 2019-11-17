@@ -1,4 +1,4 @@
-package gmcommon
+package common
 
 import (
 	"encoding/json"
