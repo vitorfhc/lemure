@@ -51,9 +51,10 @@ func main() {
 	handleFullscreen()
 
 	// Define start scene and creates Engine
-	startGameObjects := []engine.GameObject{engine.GameObject{"GO 01"}}
+	startGameObjects := make([]engine.GameObject, 1, 1)
+	startGameObjects[0] = engine.GameObject{Name: "Character"}
 	startScene := &engine.Scene{Name: "Scene 01", GameObjects: startGameObjects}
-	coreEngine = engine.Engine{startScene}
+	coreEngine = engine.Engine{CurrentScene: startScene}
 
 	// Ebiten starts
 	err := ebiten.Run(update, config.Width, config.Height, config.Scale, "lemure")
