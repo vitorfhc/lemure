@@ -45,7 +45,8 @@ func main() {
 	handleFullscreen()
 
 	// Define start scene and creates Engine
-	startScene := &gmengine.Scene{"Scene 01"}
+	startGameObjects := []gmengine.GameObject{gmengine.GameObject{"GO 01"}}
+	startScene := &gmengine.Scene{Name: "Scene 01", GameObjects: startGameObjects}
 	engine = gmengine.Engine{startScene}
 
 	// Ebiten starts
