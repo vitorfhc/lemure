@@ -5,17 +5,17 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"path/filepath"
 	"path"
+	"path/filepath"
 )
 
 // Configuration defines the configuration for the engine,
 // it is loaded from a config.json file
 type Configuration struct {
-	Fullscreen bool
-	Scale      float64
-	Width      int
-	Height     int
+	Fullscreen bool    // if should run in fullscreen mode
+	Scale      float64 // window's scale
+	Width      int     // window's width
+	Height     int     // window's height
 }
 
 // ConfigBasePath stores the base path of where to find
@@ -23,6 +23,7 @@ type Configuration struct {
 var ConfigBasePath string
 
 func init() {
+	// Initialize ConfigBasePath
 	path := filepath.Dir(os.Args[0])
 	var err error
 	ConfigBasePath, err = filepath.Abs(path)
@@ -39,6 +40,7 @@ func init() {
 func LoadConfigurations() Configuration {
 	log.Println("Loading configurations")
 
+	// Reads the file
 	filePath := path.Join(ConfigBasePath, "config.json")
 	file, err := ioutil.ReadFile(filePath)
 
@@ -46,6 +48,7 @@ func LoadConfigurations() Configuration {
 		log.Fatal(err)
 	}
 
+	// Convert from what is in the file to Configuration
 	var config Configuration
 	err = json.Unmarshal(file, &config)
 
