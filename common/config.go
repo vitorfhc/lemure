@@ -3,10 +3,11 @@ package common
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"os"
 	"path"
 	"path/filepath"
+
+	"github.com/sirupsen/logrus"
 )
 
 // Configuration defines the configuration for the engine,
@@ -23,29 +24,27 @@ type Configuration struct {
 var ConfigBasePath string
 
 func init() {
-	// Initialize ConfigBasePath
 	path := filepath.Dir(os.Args[0])
 	var err error
 	ConfigBasePath, err = filepath.Abs(path)
 
 	if err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
-
-	log.Println("Configuration base path:", ConfigBasePath)
 }
 
 // LoadConfigurations loads all configurations from config.json
 // and makes a Configuration struct from it
 func LoadConfigurations() *Configuration {
-	log.Println("Loading configurations")
+	logrus.Trace("load configurations")
 
 	// Reads the file
 	filePath := path.Join(ConfigBasePath, "config.json")
+	logrus.WithField("config-file", filePath).Debug("configuration load")
 	file, err := ioutil.ReadFile(filePath)
 
 	if err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 
 	// Convert from what is in the file to Configuration
@@ -53,8 +52,16 @@ func LoadConfigurations() *Configuration {
 	err = json.Unmarshal(file, &config)
 
 	if err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
+
+	fields := logrus.Fields{
+		"fullscreen": config.Fullscreen,
+		"width":      config.Width,
+		"height":     config.Height,
+		"scale":      config.Scale,
+	}
+	logrus.WithFields(fields).Debug("configuration loaded")
 
 	return &config
 }

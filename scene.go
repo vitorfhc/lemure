@@ -1,6 +1,6 @@
 package lemure
 
-import "log"
+import "github.com/sirupsen/logrus"
 
 // Scene holds all gameobjects of that scene and
 // updates them correctly
@@ -14,7 +14,7 @@ type Scene struct {
 // This should never be called by the user,
 // it is exported so the Engine can call it
 func (s *Scene) Update() {
-	log.Println("Scene Update:", s.Name)
+	logrus.WithField("name", s.Name).Trace("scene update")
 
 	for _, g := range s.GameObjects {
 		g.Update()
